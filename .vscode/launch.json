@@ -1,0 +1,29 @@
+
+     //       "name": "Launch Chrome against localhost",
+      //      "url": "http://localhost:8080",
+       //     "webRoot": "${workspaceRoot}"
+
+
+
+
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch localhost",
+            "type": "chrome",
+            "request": "launch",
+            "runtimeExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chromee.exe",
+            "url": "http://localhost/mypage.html",
+            "webRoot": "${workspaceRoot}/wwwroot"
+        },
+        {
+            "name": "Launch index.html (disable sourcemaps)",
+            "type": "chrome",
+            "request": "launch",
+            "runtimeExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chromee.exe",
+            "sourceMaps": false,
+            "file": "${workspaceRoot}/collector.html"
+        },
+    ]
+}

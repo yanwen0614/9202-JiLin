@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script>
+			document.getElementsByTagName("html")[0].style.fontSize=document.documentElement.clientWidth/16+"px";
+		</script>
+		<title>数据采集系统</title>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.3.min.js" ></script>
+		<script type="text/javascript" src="http://satellite.casm.ac.cn:8020/geowinweb/api?version=mapi&map=map&utils=mapcase,cartogram,advext,dvf,mobile" ></script>; 
+		<script type="text/javascript" src="js/mobile.js" ></script>
+		<script type="text/javascript">
+			function collectionfadeout()
+			{
+				$("#menu_on").animate({bottom:'-60%'},function(){
+				});
+				$("#map").animate({height:"100%"},function(){
+					mapLayers._onResize();
+					mapLayers.panTo(local);
+				});
+				$(".left_list").animate({bottom:'3.7rem'});
+				$(".right_list").animate({bottom:'3.7rem'});
+			}
+			$(function(){
+				$("#i_btn").click(function(){
+					
+					$("#menu_on").animate({bottom:'0px'},function(){
+						
+					});
+					$("#map").animate({height:"40%"},function(){
+						mapLayers._onResize();
+						mapLayers.panTo(local);
+						
+					});
+					$(".left_list").animate({bottom:'65%'});
+					$(".right_list").animate({bottom:'65%'});
+					
+					
+				});
+				$("#m_close").click(collectionfadeout);
+				$("#rwlb_top_2").click(function(){
+				//	$("#menu_on").fadeOut("slow");
+				}); 
+			});
+		</script>
+		<style>
+			html,body{
+				height:100%;
+				margin:0px;
+				overflow: hidden;
+			}
+			#map{
+				height:100%;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="rwlb-top">
+			<div class="rwlb-top-3" id="m_close">取消</div>
+			<div class="rwlb-top-4"> 数据采集 </div>
+			<div class="rwlb-top-2" id="rwlb_top_2">保存</div>
+		</div>
+		<div id="map"></div>
+		<div class="i_con">
+			<button type="button" id="i_btn"  class="i_btn">数据录入</button>
+			<div class="left_list">
+				<ul>
+					<li id="jia" class="tools" style="box-shadow: 0px 0px 5px 2px #888888;"><img src="images/add_03.png"></li>
+					<li id="jian" class="tools" style="box-shadow: 0px 5px 5px 2px #888888;"><img src="images/jian_03.png"></li>
+				</ul>
+			</div>
+			<div class="right_list">
+				<ul>
+					<li id="dingwei" class="tools" style="box-shadow: 0px 0px 5px 2px #888888;"><img src="images/dingwei_03.png"></li>
+					<li id="shuaxin" class="tools" style="box-shadow: 0px 5px 5px 2px #888888;"><img src="images/shuaxin_03.png"></li>
+				</ul>
+			</div>
+			<div class="menu_on" id="menu_on">
+				<form action="" name="collection" id="collection" method = 'post'>
+					<input type="hidden" id="lat" name="lat" value=""/>
+					<input type="hidden" id="lng" name ="lat" value=""/>
+					<input type="hidden" id ="collectiontime" name ="collectiontime" value=""/>
+					<ul>  
+						<li>
+							<span class="i_spana">基本信息</span>
+						</li>
+						<li>
+							<span class="i_spanb fl">名称</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="name" id = 'name'/>
+						</li>
+						<li>
+							<span class="i_spanb fl">位置</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="location" id = 'location'/>
+						</li>
+						<li>
+							<span class="i_spanb fl">联系人</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="linkman" id ="linkman"/>
+						</li>
+						<li>
+							<span class="i_spanb fl">电话</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="tel" id ="tel"/>
+						</li>
+						<li class="list_five">
+							<span class="i_spanb fl">上班时间</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="officetime"/>
+						</li>
+						<li class="list_six">
+							<span class="i_spanb fl">下班时间</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="offtime"/>
+						</li>
+						<li>
+							<span class="i_spanb fl">采集人</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="collector"/>
+						</li>
+						<li>
+							<span class="i_spanb fl">手机</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="mobilephone"/>
+						</li>
+						<li>
+							<span class="i_spanb fl">备注</span>
+							<input type="text" placeholder="请输入" class="i_int fr" name ="otherinfo" id = 'otherinfo'/>
+						</li>
+					</ul>
+				</form>	
+			</div>
+		</div>
+		<script type=" text/javascript">
+			
+			var subdomains = ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'];
+			
+			var sateUrl = "http://{s}.tianditu.com/DataServer?T=img_w&L={z}&Y={y}&X={x}&style=default&format=tiles";
+			var TDTSateLayer = new CTileLayer(1, 18, null, null, sateUrl, null, { subdomains: subdomains });
+			
+			var sateLabelUrl = "http://{s}.tianditu.com/DataServer?T=cia_w&L={z}&Y={y}&X={x}&style=default&format=tiles";
+			var TDTSateLabelLayer = new CTileLayer(1, 18, null, null, sateLabelUrl, null, { subdomains: subdomains });
+			
+			var vectUrl = "http://{s}.tianditu.com/DataServer?T=vec_w&L={z}&Y={y}&X={x}&style=default&format=tiles";
+			var TDTVectLayer = new CTileLayer(1, 18, null, null, vectUrl, null, { subdomains: subdomains });
+			
+			var vectLabelUrl = "http://{s}.tianditu.com/DataServer?T=cva_w&L={z}&Y={y}&X={x}&style=default&format=tiles";
+			var TDTVectLabelLayer = new CTileLayer(1, 18, null, null, vectLabelUrl, null, { subdomains: subdomains });
+			
+			var TDTMIXMAP = new CMapType([TDTSateLayer, TDTSateLabelLayer], "混合");
+			var TDTVECTORMAP = new CMapType([TDTVectLayer, TDTVectLabelLayer], "矢量");
+			var TDTSATEMAP = new CMapType([TDTSateLayer, TDTSateLabelLayer], "影像");
+			
+			var mapLayers,local;
+			//初始化加载地图
+			function mapInit(){
+				//C_BLANK_MAP
+				mapLayers = new CMapLayers('map', { mapTypes: [TDTVECTORMAP,TDTMIXMAP], center: new CLatLng(39.9,116.37), zoom: 11, doubleClickZoom: false });
+				mapLayers.addLatLngCtl();
+				CEvent.addListener(mapLayers,"click",function(){
+					$("#m_close").click();
+				});
+				//addUserMarker();
+				addLocationUserMarker();
+			}
+			mapInit();
+			//$(".tools").on("mousedown",function(){
+			//	$(this).attr("style","box-shadow: 0px 0px 1px 1px #888888;");
+				
+			//})
+			$(".tools").on("click",function(){
+				
+				if(this.id == "jia"){
+					mapLayers.zoomIn();
+				}else if(this.id == "jian"){
+					mapLayers.zoomOut();
+				}else if(this.id =="dingwei"){
+					addLocationUserMarker();
+				}else if(this.id=="shuaxin"){
+					location.reload(true);
+				}
+			})
+			
+			
+			//GPS控件
+			function addGPSControl() {
+				mapLayers.addGPS();
+			}
+			//GPS定位
+			function addLocationUserMarker() {
+				//移动设备上使用，PC上Firefox可以使用
+				//var marker = null;
+				mapLayers.on("locationfound", function (location) {
+					//if (!marker)
+					//	marker = new CUserMarker(location.latlng, { smallIcon: false,pulsing: true }).addTo(map);
+					//marker.setLatLng(location.latlng);
+					//marker.setAccuracy(location.accuracy);
+
+					//alert(location.latlng.lat+","+location.latlng.lng);
+					$("#lat").val(location.latlng.lat);
+					$("#lng").val(location.latlng.lng);
+					local = new CLatLng(location.latlng.lat,location.latlng.lng);
+					addUserMarker(location.latlng.lat,location.latlng.lng);
+				});
+				mapLayers.locate({
+					watch: false,
+					locate: true,
+					setView: true,
+					enableHighAccuracy: true
+				});
+			}
+			
+			function addUserMarker(lat,lng) {
+				mapLayers.clearOverlays();
+				var marker = new CUserMarker([lat,lng], { smallIcon: false, pulsing: true });
+				mapLayers.addOverlay(marker);
+			}
+
+			function checkcollectioninfo(rawdata)
+			{
+				var data = rawdata.serializeArray()
+				for (let index = 0; index < data.length; index++) {
+					const element = data[index];
+					if(element['value'] == ''){
+						alert(element['name'] + ' is empty');
+						return false;
+					}
+				}
+				return true
+			}
+
+			$(".rwlb-top-2").click(function(){
+				$('#collectiontime').val(Date());
+				var data = $("form#collection");
+				if(!checkcollectioninfo(data))
+				{
+					return 0;
+				}
+				alert(data.serialize());
+				
+				$.ajax({
+					type:"post",
+					url:"",
+					data:data,
+					success:function(val){
+						if(val=="1"){
+							console.log(val+ "保存成功");
+						}else{
+							console.log(val+ "保存失败，请稍后再试");
+						}
+					}
+				})  
+			collectionfadeout()
+			var resetarray = new Array('otherinfo', 'name','location','linkman','tel')
+			for(var i =0;i < resetarray.length; i++){
+			$('#'+resetarray[i]).val('');
+			}
+			})
+		</script>
+	</body>
+</html>
