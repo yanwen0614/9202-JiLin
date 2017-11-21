@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录界面</title>
+
+<link rel="stylesheet" type="text/css" href="css/login.css">
+
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="css/loginstyles.css">
+
+</head>
+<body>
+
+<div class='login'>
+  <div class='login_title'>
+	<span>账号登录</span>
+  </div>
+  <div class='login_fields'>
+	<div class='login_fields__user'>
+	  <div class='icon'>
+		<img src='img/user_icon_copy.png'>
+	  </div>
+	  <input placeholder='用户名' type='text'>
+		<div class='validation'>
+		  <img src='img/tick.png'>
+		</div>
+	  </input>
+	</div>
+	<div class='login_fields__password'>
+	  <div class='icon'>
+		<img src='img/lock_icon_copy.png'>
+	  </div>
+	  <input placeholder='密码' type='password'>
+	  <div class='validation'>
+		<img src='img/tick.png'>
+	  </div>
+	</div>
+	<div class='login_fields__submit'>
+	  <input type='submit' value='登录'>
+	  <div class='remember'>
+			<input type='checkbox' value="remember">记住我
+	  </div>
+	</div>
+  </div>
+
+
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script>
+
+function checkUsrInfo(usr,pw)
+{
+		if (usr==pw) {
+			return true
+		}
+		else
+			{return false}
+}
+
+function saveLoginInfo2cookies(usr,pw)
+
+$('input[type="submit"]').click(function () {
+	var usr = $('input[placeholder="用户名"]').val();
+	var pw =  $('input[placeholder="密码"]').val();
+	if(!checkUsrInfo(usr,pw))
+	{
+		alert('账号密码不匹配')
+		return false;
+	}
+
+	var remembered = $('input[type="checkbox"]').prop('checked')
+
+});
+</script>
+
+<div style="text-align:center;">
+</div>
+
+</body>
+</html>
