@@ -8,7 +8,6 @@
 
 <link rel="stylesheet" type="text/css" href="css/login.css">
 
-<!--必要样式-->
 <link rel="stylesheet" type="text/css" href="css/loginstyles.css">
 
 </head>
@@ -47,22 +46,12 @@
   </div>
 
 
-<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+<script src="https://cdn.bootcss.com/js-cookie/latest/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/utils/login.js" ></script>
 <script>
-
-function checkUsrInfo(usr,pw)
-{
-		if (usr==pw) {
-			return true
-		}
-		else
-			{return false}
-}
-
-function saveLoginInfo2cookies(usr,pw)
-
-$('input[type="submit"]').click(function () {
-	var usr = $('input[placeholder="用户名"]').val();
+	function login() {
+    var usr = $('input[placeholder="用户名"]').val();
 	var pw =  $('input[placeholder="密码"]').val();
 	if(!checkUsrInfo(usr,pw))
 	{
@@ -70,13 +59,17 @@ $('input[type="submit"]').click(function () {
 		return false;
 	}
 
-	var remembered = $('input[type="checkbox"]').prop('checked')
-
-});
+    var remembered = $('input[type="checkbox"]').prop('checked')
+    saveLoginInfo2cookies(usr,pw,remembered)
+    window.location='./collector.html'
+}
+	$(function(){
+		autologin();
+		$('input[type="submit"]').click(login);
+	})
+	
 </script>
 
-<div style="text-align:center;">
-</div>
 
 </body>
 </html>
